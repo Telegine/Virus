@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema Comprometido</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: monospace;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 3em;
+      margin: 0.5em 0;
+    }
+    .blink {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    #log {
+      text-align: left;
+      white-space: pre-wrap;
+      margin: 20px;
+      font-size: 1.2em;
+    }
+    .popup {
+      position: fixed;
+      top: 20%;
+      left: 30%;
+      width: 40%;
+      padding: 20px;
+      background-color: black;
+      color: red;
+      border: 5px solid red;
+      z-index: 1000;
+      font-size: 1.1em;
+      font-family: monospace;
+      text-align: center;
+    }
+    .popup h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.5em;
+      color: yellow;
+    }
+    .popup button {
+      margin-top: 15px;
+      padding: 5px 10px;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <!-- Mensaje principal oculto al inicio -->
+  <h1 id="mainMessage" class="blink" style="display:none;"></h1>
+  <!-- Registro de eventos -->
+  <div id="log"></div>
+
+  <script>
+    window.onload = function() {
+      // Función para añadir texto al log
+      function log(text) {
+        var logDiv = document.getElementById('log');
+        logDiv.innerText += text + "\n";
+      }
+      // Función para mostrar ventana emergente simulada (dentro de la página)
+      function showFakePopup(title, message) {
+        var popup = document.createElement('div');
+        popup.className = 'popup';
+        var html = '<h2>' + title + '</h2><p>' + message + '</p>';
+        popup.innerHTML = html;
+        document.body.appendChild(popup);
+        // Cerrar popup después de 3 segundos
+        setTimeout(function() {
+          popup.remove();
+        }, 3000);
+      }
+
+      // Comienza la secuencia de hackeo
+      setTimeout(function() {
+        // Primera alerta de navegador (alerta real)
+        alert("¡ATENCIÓN! Tu información ha sido comprometida");
+        // Cambiar color de fondo a rojo
+        document.body.style.backgroundColor = "#8B0000";
+        // Mostrar mensaje principal en pantalla
+        var main = document.getElementById('mainMessage');
+        main.style.display = 'block';
+        main.innerText = "SISTEMA INSEGURO";
+        // Agregar texto inicial al log
+        log("Acceso no autorizado al sistema en proceso...");
+        log("Escaneando todos los archivos y contraseñas guardadas...");
+        // Siguiente paso: muestra fake popup
+        setTimeout(function() {
+          showFakePopup("¡Virus detectado!", "Se han detectado 7 amenazas en tu sistema.");
+          log("Infectado con 7 virus peligrosos.");
+          // Siguiente alerta de navegador
+          setTimeout(function() {
+            alert("¡INFECTADO CON 7 VIRUS!");
+            log("Infectando archivos críticos...");
+            // Siguiente: mostrar transferencia
+            setTimeout(function() {
+              log("Transfiriendo archivos a servidor remoto...");
+              // Mostrar barra de progreso simulada
+              var percent = 0;
+              var progressInterval = setInterval(function() {
+                percent += Math.floor(Math.random() * 10) + 5;
+                if (percent >= 100) percent = 100;
+                document.getElementById('mainMessage').innerText = "TRANSFIRIENDO: " + percent + "%";
+                if (percent >= 100) {
+                  clearInterval(progressInterval);
+                  document.getElementById('mainMessage').innerText = "TRANSFERENCIA COMPLETADA";
+                  log("Transferencia completada. Datos enviados correctamente.");
+                  // Preguntar al usuario (confirmación real)
+                  setTimeout(function() {
+                    var detener = confirm("¿Deseas intentar detener la transferencia de datos?");
+                    if (detener) {
+                      alert("ERROR: No se pudo interrumpir el proceso. Los archivos ya están comprometidos.");
+                      log("Intento de detener la transferencia fallido.");
+                    } else {
+                      alert("La transferencia ha finalizado con éxito. Tus datos ya no son seguros.");
+                      log("Transferencia completada sin intervención del usuario.");
+                    }
+                  }, 1000);
+                }
+              }, 500);
+            }, 1000);
+          }, 2000);
+        }, 2000);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
